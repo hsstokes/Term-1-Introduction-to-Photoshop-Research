@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Term 1 — Introduction to Photoshop & Research</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+:root {
+  --primary:#ea37a3; --primary-light:#fdf1f5;
+  --teal:#0a8080;    --teal-light:#e6ffff;
+  --purple:#6c35c9;  --purple-light:#f3eeff;
+  --gold:#c87900;    --gold-light:#fff8e6;
+  --blue:#2563a8;    --blue-light:#eef4ff;
+  --dark:#1a1a2e; --light:#f9f9f9; --grid:#e8e8e8;
+  --shadow:0 4px 20px rgba(0,0,0,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Space Mono","IBM Plex Mono",monospace;background-color:#f4f4f4;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px),linear-gradient(rgba(234,55,163,0.04) 2px,transparent 2px),linear-gradient(90deg,rgba(10,128,128,0.04) 2px,transparent 2px);
+  background-size:60px 60px,60px 60px,300px 300px,300px 300px;background-attachment:fixed;
+  color:var(--dark);padding:24px 16px;line-height:1.7;font-size:15px;}
+.container{max-width:1000px;margin:0 auto;background:rgba(255,255,255,0.98);border:3px double var(--teal);border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,0.1);padding:2.5rem 3rem;}
+@media(max-width:700px){.container{padding:1.5rem;}}
+.page-header{text-align:center;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:3px dotted var(--primary);}
+.page-header h1{font-size:1.9rem;color:var(--primary);font-weight:700;letter-spacing:1px;margin-bottom:0.3rem;}
+.page-header .subtitle{font-size:0.88rem;color:var(--teal);font-weight:400;letter-spacing:2px;text-transform:uppercase;}
+.timing-strip{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:1.5rem;}
+.timing-badge{padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;border:2px solid;}
+.overview-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.5rem;}
+.overview-card{border-radius:10px;padding:12px 10px;text-align:center;border-left:4px solid;}
+.overview-card h4{font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
+.overview-card p{font-size:0.78rem;margin:0;opacity:0.85;}
+.ov-t1{background:var(--teal-light);border-color:var(--teal);} .ov-t1 h4{color:var(--teal);}
+.ov-t2{background:var(--primary-light);border-color:var(--primary);} .ov-t2 h4{color:var(--primary);}
+.ov-t3{background:var(--purple-light);border-color:var(--purple);} .ov-t3 h4{color:var(--purple);}
+.ov-t4{background:var(--blue-light);border-color:var(--blue);} .ov-t4 h4{color:var(--blue);}
+.ov-sub{background:var(--gold-light);border-color:var(--gold);} .ov-sub h4{color:var(--gold);}
+.progress-wrap{height:8px;background:#eee;border-radius:4px;margin-bottom:1.5rem;overflow:hidden;}
+.progress-bar{height:100%;width:16.6%;background:linear-gradient(90deg,var(--primary),var(--teal));border-radius:4px;transition:width 0.4s ease;}
+.tab-nav{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin-bottom:2rem;}
+@media(max-width:700px){.tab-nav{grid-template-columns:repeat(3,1fr);}}
+.tab-btn{background:var(--light);border:2px solid #ddd;border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;transition:all 0.25s ease;box-shadow:0 2px 8px rgba(0,0,0,0.06);min-height:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;}
+.tab-btn:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,0.12);}
+.tab-btn .ti{font-size:1.3rem;} .tab-btn .tl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;} .tab-btn .ts{font-size:0.6rem;opacity:0.7;}
+.tab-btn.active-tab{color:white;transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,0.18);}
+.tab-btn[data-tab="overview"].active-tab{background:#555;border-color:#555;}
+.tab-btn[data-tab="task1"].active-tab{background:var(--teal);border-color:var(--teal);}
+.tab-btn[data-tab="task2"].active-tab{background:var(--primary);border-color:var(--primary);}
+.tab-btn[data-tab="task3"].active-tab{background:var(--purple);border-color:var(--purple);}
+.tab-btn[data-tab="task4"].active-tab{background:var(--blue);border-color:var(--blue);}
+.tab-btn[data-tab="submit"].active-tab{background:var(--gold);border-color:var(--gold);}
+.section{display:none;animation:fadeIn 0.4s ease;} .section.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+.section-banner{padding:13px 20px;border-radius:10px;font-weight:700;font-size:1.05rem;margin-bottom:1.5rem;border:2px solid;text-align:center;position:relative;overflow:hidden;}
+.section-banner::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;}
+.banner-teal{background:var(--teal-light);color:var(--teal);border-color:var(--teal);} .banner-teal::before{background:var(--teal);}
+.banner-pink{background:var(--primary-light);color:var(--primary);border-color:var(--primary);} .banner-pink::before{background:var(--primary);}
+.banner-purple{background:var(--purple-light);color:var(--purple);border-color:var(--purple);} .banner-purple::before{background:var(--purple);}
+.banner-blue{background:var(--blue-light);color:var(--blue);border-color:var(--blue);} .banner-blue::before{background:var(--blue);}
+.banner-gold{background:var(--gold-light);color:var(--gold);border-color:var(--gold);} .banner-gold::before{background:var(--gold);}
+h2{color:var(--teal);font-size:1.2rem;margin:1.8rem 0 0.8rem;display:flex;align-items:center;gap:10px;}
+h2::before{content:"";display:inline-block;width:6px;height:20px;background:var(--primary);border-radius:3px;flex-shrink:0;}
+h3{color:var(--primary);font-size:1rem;margin:1.1rem 0 0.6rem;}
+p{margin-bottom:1em;font-size:0.95rem;line-height:1.8;} a{color:var(--teal);}
+.workflow-box{border:2px solid var(--teal);border-radius:12px;overflow:hidden;margin:1.2rem 0;box-shadow:var(--shadow);}
+.workflow-box.pink-box{border-color:var(--primary);} .workflow-box.purple-box{border-color:var(--purple);} .workflow-box.blue-box{border-color:var(--blue);}
+.workflow-header{background:var(--teal);color:white;padding:9px 18px;font-weight:700;font-size:0.95rem;}
+.workflow-header.pink-hd{background:var(--primary);} .workflow-header.purple-hd{background:var(--purple);} .workflow-header.blue-hd{background:var(--blue);}
+.workflow-steps{padding:14px;background:#fafafa;}
+.step{background:white;border-radius:10px;padding:13px 13px 13px 50px;position:relative;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.step:last-child{margin-bottom:0;}
+.step-num{position:absolute;left:-8px;top:50%;transform:translateY(-50%);width:30px;height:30px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;}
+.step-num.teal-num{background:var(--teal);} .step-num.purple-num{background:var(--purple);} .step-num.blue-num{background:var(--blue);}
+.step-title{color:var(--primary);font-weight:700;font-size:0.95rem;margin-bottom:5px;}
+.step-title.teal-title{color:var(--teal);} .step-title.purple-title{color:var(--purple);} .step-title.blue-title{color:var(--blue);}
+.step ul{margin-left:16px;} .step li{margin-bottom:4px;font-size:0.9rem;}
+.info-box{background:#f0fafa;border-left:5px solid var(--teal);padding:13px 16px;border-radius:0 8px 8px 0;margin:1rem 0;}
+.info-box.pink-info{background:var(--primary-light);border-color:var(--primary);}
+.info-box.purple-info{background:var(--purple-light);border-color:var(--purple);}
+.info-box.blue-info{background:var(--blue-light);border-color:var(--blue);}
+.info-box strong{color:var(--teal);} .info-box.pink-info strong{color:var(--primary);} .info-box.purple-info strong{color:var(--purple);} .info-box.blue-info strong{color:var(--blue);}
+.info-box ul{margin-left:16px;margin-top:6px;} .info-box li{margin-bottom:4px;font-size:0.9rem;}
+.tip-box{background:#fff8e1;border:1px solid #ffc107;border-radius:8px;padding:11px 15px;margin:1rem 0;font-size:0.9rem;}
+.tip-box h4{color:#7a5800;margin-bottom:5px;font-size:0.88rem;} .tip-box ul{margin-left:14px;} .tip-box li{margin-bottom:3px;}
+.notice-box{background:rgba(234,55,163,0.1);border-left:5px solid var(--primary);border-radius:0 8px 8px 0;padding:11px 15px;margin:1rem 0;font-size:0.9rem;}
+.notice-box strong{color:var(--primary);}
+.checklist{background:white;border:2px solid var(--teal);border-radius:10px;padding:16px;margin:1.5rem 0;box-shadow:var(--shadow);}
+.checklist.pink-check{border-color:var(--primary);} .checklist.purple-check{border-color:var(--purple);} .checklist.blue-check{border-color:var(--blue);}
+.checklist h3{color:var(--teal);text-align:center;margin:0 0 10px;padding-bottom:8px;border-bottom:2px dashed var(--teal);font-size:0.95rem;}
+.checklist.pink-check h3{color:var(--primary);border-color:var(--primary);} .checklist.purple-check h3{color:var(--purple);border-color:var(--purple);} .checklist.blue-check h3{color:var(--blue);border-color:var(--blue);}
+.checklist-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:9px;}
+.chk-box{width:22px;height:22px;border:2px solid var(--teal);border-radius:4px;flex-shrink:0;cursor:pointer;position:relative;transition:background 0.2s;}
+.checklist.pink-check .chk-box{border-color:var(--primary);} .checklist.purple-check .chk-box{border-color:var(--purple);} .checklist.blue-check .chk-box{border-color:var(--blue);}
+.chk-box.checked::after{content:"✓";position:absolute;color:var(--teal);font-size:15px;font-weight:700;top:-2px;left:3px;}
+.checklist.pink-check .chk-box.checked::after{color:var(--primary);} .checklist.purple-check .chk-box.checked::after{color:var(--purple);} .checklist.blue-check .chk-box.checked::after{color:var(--blue);}
+.chk-label{font-weight:700;color:var(--teal);font-size:0.88rem;padding-top:1px;}
+.checklist.pink-check .chk-label{color:var(--primary);} .checklist.purple-check .chk-label{color:var(--purple);} .checklist.blue-check .chk-label{color:var(--blue);}
+.key{display:inline-block;background:#f2f2f2;border:1px solid #ccc;border-radius:4px;padding:1px 7px;font-size:0.82em;font-family:monospace;margin:0 2px;}
+/* Examples */
+.examples-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:1.2rem 0;}
+.example-card{background:white;border:2px solid #eee;border-radius:12px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.07);transition:all 0.3s ease;cursor:zoom-in;}
+.example-card:hover{border-color:var(--primary);box-shadow:0 6px 18px rgba(0,0,0,0.12);transform:translateY(-2px);}
+.example-img{width:100%;height:190px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.example-img img{width:100%;height:100%;object-fit:cover;}
+.placeholder-box{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;gap:6px;background:#f0f0f0;}
+.placeholder-box span:first-child{font-size:2rem;opacity:0.3;}
+.placeholder-box span:last-child{font-size:0.72rem;color:#bbb;}
+.zoom-hint{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,0.5);color:white;font-size:0.6rem;padding:2px 6px;border-radius:3px;pointer-events:none;}
+.example-cap{padding:10px 12px;background:#fafafa;font-size:0.8rem;color:#555;text-align:center;}
+.example-cap em{display:block;font-size:0.72rem;color:#aaa;margin-top:2px;}
+/* Lightbox */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;align-items:center;justify-content:center;flex-direction:column;padding:20px;cursor:zoom-out;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:88vw;max-height:78vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,0.5);object-fit:contain;}
+.lightbox-cap{color:#ccc;font-size:0.78rem;margin-top:12px;text-align:center;font-family:monospace;}
+.lightbox-cap em{display:block;color:#888;font-size:0.68rem;margin-top:3px;}
+.lightbox-close{position:absolute;top:16px;right:22px;color:white;font-size:2rem;cursor:pointer;background:none;border:none;opacity:0.7;}
+.lightbox-close:hover{opacity:1;}
+/* Research grid */
+.research-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1rem 0;}
+@media(max-width:550px){.research-grid{grid-template-columns:1fr;}}
+.research-item{background:white;border:2px solid #e0e0e0;border-radius:10px;padding:13px;display:flex;gap:9px;align-items:flex-start;box-shadow:0 2px 6px rgba(0,0,0,0.04);transition:border-color 0.2s;}
+.research-item:hover{border-color:var(--primary);}
+.research-item .ri-icon{font-size:1.4rem;flex-shrink:0;}
+.research-item h4{font-size:0.84rem;color:var(--teal);margin-bottom:2px;}
+.research-item p{font-size:0.78rem;color:#666;margin:0;}
+/* Ref examples */
+.ref-example{background:var(--purple-light);border:2px dashed var(--purple);border-radius:8px;padding:12px 16px;margin:0.8rem 0;font-size:0.86rem;}
+.ref-label{font-size:0.68rem;color:var(--purple);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:5px;}
+.ref-example p{margin:0;color:#333;} .ref-example em{color:var(--purple);}
+/* Quiz */
+.quiz-game{background:linear-gradient(135deg,var(--teal-light),#fff);border:2px solid var(--teal);border-radius:14px;padding:22px;margin:1.5rem 0;box-shadow:var(--shadow);text-align:center;}
+.quiz-game h3{color:var(--teal);margin:0 0 5px;font-size:1.05rem;}
+.os-toggle{display:flex;gap:10px;justify-content:center;margin:10px 0;}
+.os-btn{padding:7px 20px;border-radius:20px;border:2px solid var(--teal);background:white;color:var(--teal);font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.os-btn.active{background:var(--teal);color:white;}
+.quiz-question{font-weight:700;color:var(--teal);font-size:0.98rem;margin:12px 0 10px;min-height:26px;}
+.quiz-options{display:flex;flex-direction:column;gap:8px;align-items:center;margin-bottom:12px;}
+.quiz-opt{background:white;border:2px solid var(--teal);border-radius:8px;padding:9px 20px;font-family:inherit;font-size:0.9rem;cursor:pointer;width:90%;max-width:340px;transition:all 0.2s;text-align:center;}
+.quiz-opt:hover{background:var(--teal-light);}
+.quiz-opt.correct{background:#d4edda;border-color:#28a745;color:#155724;}
+.quiz-opt.wrong{background:#f8d7da;border-color:#dc3545;color:#721c24;}
+.quiz-feedback{font-size:0.9rem;font-weight:700;min-height:20px;margin-bottom:6px;}
+.quiz-score{font-size:0.82rem;color:#666;}
+.quiz-result{padding:14px;border-radius:10px;background:white;border:2px solid var(--teal);margin-top:10px;}
+.quiz-result h4{color:var(--teal);margin-bottom:6px;}
+.quiz-retry{background:var(--teal);color:white;border:none;border-radius:8px;padding:9px 22px;font-family:inherit;font-size:0.9rem;font-weight:700;cursor:pointer;margin-top:8px;transition:all 0.2s;}
+.quiz-retry:hover{background:#075f5f;}
+/* Doc card */
+.doc-card{background:linear-gradient(135deg,var(--blue-light),white);border:3px solid var(--blue);border-radius:14px;padding:26px 22px;text-align:center;margin:1.5rem 0;box-shadow:var(--shadow);}
+.doc-card h3{color:var(--blue);font-size:1.1rem;margin:0 0 8px;}
+.doc-card p{color:#555;font-size:0.88rem;margin-bottom:16px;}
+.doc-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px;}
+.doc-step{background:white;border-radius:8px;padding:12px 10px;border-top:4px solid var(--blue);text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.06);}
+.doc-step .ds-num{width:26px;height:26px;background:var(--blue);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;margin:0 auto 6px;}
+.doc-step p{font-size:0.76rem;color:#555;margin:0;}
+.doc-link{display:inline-block;background:var(--blue);color:white;padding:13px 28px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.95rem;box-shadow:0 4px 16px rgba(37,99,168,0.3);transition:all 0.25s ease;}
+.doc-link:hover{background:#1a4d8a;transform:translateY(-2px);}
+/* Submit */
+.submit-box{background:linear-gradient(135deg,var(--teal-light),white);border:3px solid var(--teal);border-radius:12px;padding:22px;text-align:center;margin:1.5rem 0;box-shadow:var(--shadow);}
+.submit-box h3{color:var(--teal);margin:0 0 14px;font-size:1.05rem;}
+.submit-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:18px;}
+.submit-item{background:white;border-radius:8px;padding:11px;border-left:4px solid var(--teal);text-align:left;box-shadow:0 2px 6px rgba(0,0,0,0.06);}
+.submit-item h4{color:var(--teal);font-size:0.78rem;margin-bottom:3px;} .submit-item p{font-size:0.75rem;color:#666;margin:0;}
+.submit-item:nth-child(2){border-color:var(--primary);} .submit-item:nth-child(2) h4{color:var(--primary);}
+.submit-item:nth-child(3){border-color:var(--purple);}  .submit-item:nth-child(3) h4{color:var(--purple);}
+.submit-item:nth-child(4){border-color:var(--blue);}    .submit-item:nth-child(4) h4{color:var(--blue);}
+.padlet-btn{display:inline-block;background:var(--teal);color:white;padding:13px 28px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.95rem;box-shadow:0 4px 16px rgba(10,128,128,0.3);transition:all 0.25s ease;}
+.padlet-btn:hover{transform:translateY(-2px);}
+/* Nav */
+.nav-btns{display:flex;justify-content:space-between;margin-top:2rem;padding-top:1rem;border-top:1px dashed #ccc;}
+.nav-btn{padding:10px 20px;border-radius:8px;font-family:inherit;font-size:0.88rem;font-weight:700;cursor:pointer;border:none;transition:all 0.25s ease;box-shadow:0 3px 8px rgba(0,0,0,0.1);}
+.nav-btn:hover{transform:translateY(-2px);box-shadow:0 5px 12px rgba(0,0,0,0.15);}
+.btn-prev{background:#eee;color:#555;} .btn-prev::before{content:"← ";}
+.btn-next{background:var(--teal);color:white;} .btn-next::after{content:" →";}
+.btn-next.pink-next{background:var(--primary);} .btn-next.purple-next{background:var(--purple);} .btn-next.blue-next{background:var(--blue);} .btn-next.gold-next{background:var(--gold);}
+.print-btn{position:fixed;bottom:20px;right:20px;background:var(--teal);color:white;border:none;border-radius:50%;width:50px;height:50px;font-size:18px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,0.2);transition:all 0.25s;display:flex;align-items:center;justify-content:center;}
+.print-btn:hover{transform:translateY(-3px);}
+@media print{.print-btn,.tab-nav,.nav-btns,.progress-wrap{display:none;}body{background:white;}.container{border:none;box-shadow:none;padding:0;}.section{display:block!important;page-break-before:always;}}
+footer{text-align:center;margin-top:2rem;padding-top:1rem;font-size:0.75rem;color:#888;border-top:1px dashed var(--primary);}
+</style>
+</head>
+<body>
+
+<div class="lightbox" id="lightbox" onclick="closeLB()">
+  <button class="lightbox-close" onclick="closeLB()">✕</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lightbox-cap" id="lb-cap"></div>
+</div>
+
+<div class="container">
+
+  <div class="page-header">
+    <div class="subtitle">Rotation 1 / Lesson 1 &nbsp;·&nbsp; IELS Level 5</div>
+    <h1>✦ Term 1: Introduction to Photoshop &amp; Research</h1>
+  </div>
+
+  <div class="timing-strip">
+    <span class="timing-badge" style="background:var(--teal-light);color:var(--teal);border-color:var(--teal);">⏱ Total: 2.5 hours</span>
+    <span class="timing-badge" style="background:var(--teal-light);color:var(--teal);border-color:var(--teal);">🎨 Task 1: 60 min</span>
+    <span class="timing-badge" style="background:var(--primary-light);color:var(--primary);border-color:var(--primary);">📄 Task 2: 30 min</span>
+    <span class="timing-badge" style="background:var(--purple-light);color:var(--purple);border-color:var(--purple);">📚 Task 3: 20 min</span>
+    <span class="timing-badge" style="background:var(--blue-light);color:var(--blue);border-color:var(--blue);">📝 Task 4: 20 min</span>
+  </div>
+
+  <div class="overview-strip">
+    <div class="overview-card ov-t1"><h4>🎨 Task 1</h4><p>Photoshop Content-Aware Fill &amp; Artist Research</p></div>
+    <div class="overview-card ov-t2"><h4>📄 Task 2</h4><p>Research Page — what to include</p></div>
+    <div class="overview-card ov-t3"><h4>📚 Task 3</h4><p>Harvard Referencing Introduction</p></div>
+    <div class="overview-card ov-t4"><h4>📝 Task 4</h4><p>Document &amp; Reflect on learning</p></div>
+    <div class="overview-card ov-sub"><h4>📤 Submit</h4><p>Upload completed work to Padlet</p></div>
+  </div>
+
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+  <div class="tab-nav">
+    <div class="tab-btn active-tab" data-tab="overview"><span class="ti">🏠</span><span class="tl">Overview</span><span class="ts">Start here</span></div>
+    <div class="tab-btn" data-tab="task1"><span class="ti">🎨</span><span class="tl">Task 1</span><span class="ts">Photoshop · 60min</span></div>
+    <div class="tab-btn" data-tab="task2"><span class="ti">📄</span><span class="tl">Task 2</span><span class="ts">Research · 30min</span></div>
+    <div class="tab-btn" data-tab="task3"><span class="ti">📚</span><span class="tl">Task 3</span><span class="ts">Referencing · 20min</span></div>
+    <div class="tab-btn" data-tab="task4"><span class="ti">📝</span><span class="tl">Task 4</span><span class="ts">Reflect · 20min</span></div>
+    <div class="tab-btn" data-tab="submit"><span class="ti">📤</span><span class="tl">Submit</span><span class="ts">Upload work</span></div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="overview" class="section active">
+    <h2>What is This Session?</h2>
+    <p>Welcome to Term 1, Rotation 1. This session introduces two key skills you will use throughout your design portfolio: <strong>Photoshop techniques</strong> for developing creative ideas from physical research, and <strong>research page conventions</strong> including how to correctly reference your sources.</p>
+    <div class="info-box">
+      <strong>By the end of this session you will have:</strong>
+      <ul>
+        <li>Used Photoshop's Content-Aware Fill to expand an image from your physical work into a new digital composition</li>
+        <li>Added artist research and contextual notes to an A3 layout</li>
+        <li>Understood what a strong research page includes — with reference to student examples</li>
+        <li>Created at least one Harvard-style reference for your portfolio</li>
+        <li>Documented and reflected on your learning</li>
+      </ul>
+    </div>
+    <h2>Session Plan at a Glance</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:1rem 0;">
+      <div style="background:var(--teal-light);border:2px solid var(--teal);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-size:1.8rem;margin-bottom:5px;">🎨</div>
+        <strong style="color:var(--teal);font-size:0.85rem;">Task 1 — 60 min</strong>
+        <p style="margin:6px 0 0;font-size:0.8rem;">Photoshop: Content-Aware Fill, artist research &amp; keyboard shortcuts quiz</p>
+      </div>
+      <div style="background:var(--primary-light);border:2px solid var(--primary);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-size:1.8rem;margin-bottom:5px;">📄</div>
+        <strong style="color:var(--primary);font-size:0.85rem;">Task 2 — 30 min</strong>
+        <p style="margin:6px 0 0;font-size:0.8rem;">Research page — review student examples and check your own page</p>
+      </div>
+      <div style="background:var(--purple-light);border:2px solid var(--purple);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-size:1.8rem;margin-bottom:5px;">📚</div>
+        <strong style="color:var(--purple);font-size:0.85rem;">Task 3 — 20 min</strong>
+        <p style="margin:6px 0 0;font-size:0.8rem;">Write a Harvard reference for your chosen artist</p>
+      </div>
+      <div style="background:var(--blue-light);border:2px solid var(--blue);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-size:1.8rem;margin-bottom:5px;">📝</div>
+        <strong style="color:var(--blue);font-size:0.85rem;">Task 4 — 20 min</strong>
+        <p style="margin:6px 0 0;font-size:0.8rem;">Document your progress and reflect on what you have learned</p>
+      </div>
+    </div>
+    <div class="tip-box">
+      <h4>💡 Before You Start</h4>
+      <ul>
+        <li>Have a scanned image from your physical sketchbook ready to use in Photoshop</li>
+        <li>Have your research folder open — you will need your artist references for Tasks 2 and 3</li>
+        <li>Open Photoshop and set up a new A3 document before beginning Task 1</li>
+      </ul>
+    </div>
+    <div class="nav-btns">
+      <button class="nav-btn btn-prev" disabled>Previous</button>
+      <button class="nav-btn btn-next" onclick="goTo('task1')">Task 1: Photoshop</button>
+    </div>
+  </div>
+
+  <!-- TASK 1 -->
+  <div id="task1" class="section">
+    <div class="section-banner banner-teal">🎨 Task 1 — Photoshop: Content-Aware Fill &amp; Artist Research <span style="font-size:0.78rem;font-weight:400;opacity:0.8;">(60 minutes)</span></div>
+    <p style="text-align:center;margin-bottom:1.5rem;">Use Photoshop's Content-Aware Fill to creatively expand your physical artwork, then add artist research and reflective notes to your A3 layout.</p>
+    <div class="info-box">
+      <strong>Document Setup:</strong>
+      <ul>
+        <li>File → New → <strong>A3 Landscape</strong> (420 × 297 mm)</li>
+        <li>Resolution: <strong>300 dpi</strong> &nbsp;|&nbsp; Colour Mode: <strong>CMYK</strong></li>
+      </ul>
+    </div>
+    <div class="workflow-box">
+      <div class="workflow-header">Step-by-Step Workflow</div>
+      <div class="workflow-steps">
+        <div class="step"><div class="step-num teal-num">1</div><div class="step-title teal-title">Prepare Your Document</div><ul><li>File → New → A3 Landscape | 300 dpi | CMYK</li><li>Add a white background layer: <strong>Edit → Fill → White</strong></li></ul></div>
+        <div class="step"><div class="step-num teal-num">2</div><div class="step-title teal-title">Import Your Physical Work</div><ul><li>Drag and drop your scanned image into Photoshop, or use <strong>File → Place Embedded…</strong></li><li>Use <strong>Move Tool (V)</strong> to position and <span class="key">Cmd/Ctrl + T</span> to resize or rotate</li></ul></div>
+        <div class="step"><div class="step-num teal-num">3</div><div class="step-title teal-title">Content-Aware Fill — Expand Your Ideas</div><ul><li>Use <strong>Rectangular Marquee Tool (M)</strong> to select an interesting area — a texture, shape, or detail</li><li><span class="key">Cmd/Ctrl + C</span> then <span class="key">Cmd/Ctrl + V</span> to create a new layer of just that section</li><li>Hide the original layer using the 👁 eye icon so your cut-out sits on white</li><li>Use <strong>Magic Wand Tool (W)</strong> to select the white background around your shape</li><li>Go to <strong>Edit → Content-Aware Fill…</strong> → preview and adjust → click <strong>OK</strong></li></ul><div class="notice-box" style="margin-top:8px;"><strong>Why do this?</strong> Content-Aware Fill helps you think more abstractly with your primary research — generating new textures and forms that can inspire future design ideas.</div></div>
+        <div class="step"><div class="step-num teal-num">4</div><div class="step-title teal-title">Refine &amp; Blend</div><ul><li>Experiment with <strong>blending modes</strong> and <strong>layer opacity</strong> to unify your composition</li><li>Merge layers when you are satisfied with the result</li></ul></div>
+        <div class="step"><div class="step-num teal-num">5</div><div class="step-title teal-title">Add Text &amp; Artist Research</div><ul><li>Use <strong>Type Tool (T)</strong> to add artist names, short quotes, and reflective notes</li><li>Keep sentences short and focused — quality over quantity</li><li>Recommended fonts: <strong>Andale Mono</strong>, <strong>Orator Std</strong>, <strong>Typewriter Condensed</strong></li><li>Text size for A3 print: <strong>9–14pt</strong> is usually sufficient</li><li>Avoid placing text directly over busy image areas — give it breathing room</li></ul></div>
+        <div class="step"><div class="step-num teal-num">6</div><div class="step-title teal-title">Save Your Work</div><ul><li>Save as <strong>Photoshop (.PSD)</strong> to keep all layers editable</li><li>Export as <strong>JPEG (.JPG)</strong> for upload to Padlet</li></ul></div>
+      </div>
+    </div>
+    <h2>Artist Research &amp; Reflection</h2>
+    <p>Choose one artist whose work connects to your visual ideas. Add their name, a short quote or idea, and one or two sentences explaining what you learned from their practice. You will write a formal Harvard reference for this artist in Task 3.</p>
+    <div class="info-box">
+      <strong>Artists to explore:</strong>
+      <ul>
+        <li><strong>Gerhard Richter</strong> — blurring to question memory and photography</li>
+        <li><strong>Lorna Simpson</strong> — combining image and text to explore identity</li>
+        <li><strong>Andreas Gursky</strong> — building digital compositions from multiple images</li>
+        <li><strong>Ruth van Beek</strong> — cut-outs that suggest movement and emotion</li>
+        <li><strong>Sarah Charlesworth</strong> — how images communicate concepts</li>
+      </ul>
+    </div>
+    <h2>Tutorial Video</h2>
+    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;border:2px solid var(--teal);box-shadow:var(--shadow);margin:1rem 0;">
+      <iframe src="https://ual.cloud.panopto.eu/Panopto/Pages/embed.aspx?id=b3839b74-5113-4c3f-9929-b37d00a206ba" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" allowfullscreen></iframe>
+    </div>
+
+    <h2>⌨️ Keyboard Shortcuts Practice</h2>
+    <p>Test your knowledge of essential Photoshop shortcuts. Select your operating system and work through all ten questions.</p>
+    <div class="quiz-game">
+      <h3>Photoshop Shortcuts Quiz</h3>
+      <p style="font-size:0.8rem;color:#666;margin-bottom:8px;">Select your OS then answer each question</p>
+      <div class="os-toggle">
+        <button class="os-btn active" id="btn-mac" onclick="setOS('mac')">Mac</button>
+        <button class="os-btn" id="btn-pc" onclick="setOS('pc')">PC</button>
+      </div>
+      <div class="quiz-question" id="q-question">Loading…</div>
+      <div class="quiz-options" id="q-options"></div>
+      <div class="quiz-feedback" id="q-feedback"></div>
+      <div class="quiz-score" id="q-score"></div>
+      <div id="q-result" class="quiz-result" style="display:none;">
+        <h4>Quiz Complete!</h4>
+        <p id="q-final"></p>
+        <button class="quiz-retry" onclick="initQuiz()">Try Again</button>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>Task 1 Checklist ✓</h3>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Created A3 document at 300 dpi CMYK</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Imported scanned physical work</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Used Content-Aware Fill to expand the image</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Applied blending modes and layer refinement</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Added artist name, quote, and reflection text</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Saved as PSD and exported as JPEG</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Completed the keyboard shortcuts quiz</span></div>
+    </div>
+    <div class="nav-btns">
+      <button class="nav-btn btn-prev" onclick="goTo('overview')">Overview</button>
+      <button class="nav-btn btn-next pink-next" onclick="goTo('task2')">Task 2: Research Page</button>
+    </div>
+  </div>
+
+  <!-- TASK 2 -->
+  <div id="task2" class="section">
+    <div class="section-banner banner-pink">📄 Task 2 — Research Page: What to Include <span style="font-size:0.78rem;font-weight:400;opacity:0.8;">(30 minutes)</span></div>
+    <p style="text-align:center;margin-bottom:1.5rem;">A strong research page shows <strong>thinking, connections, and evidence of research</strong> — not just a collection of images. Study the student examples below, then apply these principles to your own work.</p>
+
+    <h2>Student Examples — Good Practice</h2>
+    <p>These pages demonstrate strong research practice. Notice how images, annotations, research links, and references work together. Click any image to enlarge.</p>
+
+    <div class="examples-grid">
+      <div class="example-card" onclick="openLB('images/student-research-1.jpg','Clear visual connection between primary research and secondary images — research links show where design ideas come from','Student work — used with permission')">
+        <div class="example-img">
+          <img src="images/student-research-1.jpg" alt="Student example 1" onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder-box').style.display='flex';">
+          <div class="placeholder-box" style="display:none;"><span>🖼️</span><span>Add: student-research-1.jpg</span></div>
+          <span class="zoom-hint">🔍 enlarge</span>
+        </div>
+        <div class="example-cap">Strong research links and visual connections<em>Student: [Name] — used with permission</em></div>
+      </div>
+
+      <div class="example-card" onclick="openLB('images/student-research-2.jpg','Personal annotations showing genuine engagement with the research — not just descriptions but analytical observations','Student work — used with permission')">
+        <div class="example-img">
+          <img src="images/student-research-2.jpg" alt="Student example 2" onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder-box').style.display='flex';">
+          <div class="placeholder-box" style="display:none;"><span>🖼️</span><span>Add: student-research-2.jpg</span></div>
+          <span class="zoom-hint">🔍 enlarge</span>
+        </div>
+        <div class="example-cap">Strong annotations showing genuine personal response<em>Student: [Name] — used with permission</em></div>
+      </div>
+
+      <div class="example-card" onclick="openLB('images/student-research-3.jpg','Named artist reference clearly integrated — brief explanation of connection to the student\'s own research','Student work — used with permission')">
+        <div class="example-img">
+          <img src="images/student-research-3.jpg" alt="Student example 3" onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder-box').style.display='flex';">
+          <div class="placeholder-box" style="display:none;"><span>🖼️</span><span>Add: student-research-3.jpg</span></div>
+          <span class="zoom-hint">🔍 enlarge</span>
+        </div>
+        <div class="example-cap">Artist reference clearly integrated with the page<em>Student: [Name] — used with permission</em></div>
+      </div>
+
+      <div class="example-card" onclick="openLB('images/student-research-4.jpg','Balanced layout with clear title, sensitive typography and properly credited sources','Student work — used with permission')">
+        <div class="example-img">
+          <img src="images/student-research-4.jpg" alt="Student example 4" onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder-box').style.display='flex';">
+          <div class="placeholder-box" style="display:none;"><span>🖼️</span><span>Add: student-research-4.jpg</span></div>
+          <span class="zoom-hint">🔍 enlarge</span>
+        </div>
+        <div class="example-cap">Balanced layout with credited sources and clear title<em>Student: [Name] — used with permission</em></div>
+      </div>
+    </div>
+
+    <h2>Essential Elements of a Research Page</h2>
+    <div class="research-grid">
+      <div class="research-item"><span class="ri-icon">🖼️</span><div><h4>Primary Research Images</h4><p>Your own photographs, sketches, or observations — original material you have gathered yourself</p></div></div>
+      <div class="research-item"><span class="ri-icon">🔗</span><div><h4>Research Links</h4><p>Secondary images (artist work, textiles, fashion) that visually connect to your primary research and show where ideas came from</p></div></div>
+      <div class="research-item"><span class="ri-icon">✍️</span><div><h4>Annotations &amp; Labels</h4><p>Short written notes explaining your choices — what you notice, what interests you, what connects to your design ideas</p></div></div>
+      <div class="research-item"><span class="ri-icon">🎨</span><div><h4>Artist / Designer Reference</h4><p>At least one named artist or designer whose work relates to your research, with a brief explanation of the connection</p></div></div>
+      <div class="research-item"><span class="ri-icon">📚</span><div><h4>Sources &amp; References</h4><p>Where did your secondary images come from? All sources must be credited — see Task 3 for Harvard referencing</p></div></div>
+      <div class="research-item"><span class="ri-icon">🗂️</span><div><h4>Clear Title or Subheading</h4><p>A heading that tells the reader what this page is about — keeps your portfolio organised and easy to navigate</p></div></div>
+    </div>
+
+    <h2>What Makes a Research Page Strong?</h2>
+    <div class="info-box pink-info">
+      <strong>Strong research pages show:</strong>
+      <ul>
+        <li>A clear <strong>visual relationship</strong> between primary research and secondary images</li>
+        <li><strong>Genuine curiosity</strong> — annotations show you are thinking analytically, not just describing</li>
+        <li>Evidence that research is <strong>directly informing your design ideas</strong></li>
+        <li>A consistent, readable <strong>layout</strong> — easy to follow and visually balanced</li>
+        <li>All <strong>sources credited</strong> correctly throughout</li>
+      </ul>
+    </div>
+    <div class="tip-box">
+      <h4>⚠️ Common Mistakes to Avoid</h4>
+      <ul>
+        <li>Images placed without any annotations — the reader cannot see your thinking</li>
+        <li>No research links — where did the design ideas come from?</li>
+        <li>Sources uncredited — all images and references must be acknowledged</li>
+        <li>Subtitles or text that dominate the layout — keep typography sensitive and proportionate</li>
+        <li>Disconnected images — everything on the page should relate to a clear theme</li>
+      </ul>
+    </div>
+
+    <div class="checklist pink-check">
+      <h3>Task 2 Checklist ✓</h3>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Reviewed the student examples and identified strong practice</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Page has a clear title or subheading</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Primary research images are present</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Research links show where ideas came from</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Annotations explain your thinking analytically</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">At least one artist or designer is named and connected</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">All sources are credited (formalise in Task 3)</span></div>
+    </div>
+    <div class="nav-btns">
+      <button class="nav-btn btn-prev" onclick="goTo('task1')">Task 1</button>
+      <button class="nav-btn btn-next purple-next" onclick="goTo('task3')">Task 3: Referencing</button>
+    </div>
+  </div>
+
+  <!-- TASK 3 -->
+  <div id="task3" class="section">
+    <div class="section-banner banner-purple">📚 Task 3 — Harvard Referencing Introduction <span style="font-size:0.78rem;font-weight:400;opacity:0.8;">(20 minutes)</span></div>
+    <p style="text-align:center;margin-bottom:1.5rem;">All sources used in your portfolio must be referenced correctly. This task introduces <strong>Harvard referencing</strong> — the style used across your course.</p>
+    <h2>Why Do We Reference?</h2>
+    <div class="info-box purple-info">
+      <strong>Referencing matters because:</strong>
+      <ul>
+        <li>It shows you have done <strong>genuine research</strong> — not just collected images</li>
+        <li>It gives <strong>credit</strong> to the artists, designers, and photographers whose work you use</li>
+        <li>It is a <strong>required and assessed element</strong> of your portfolio</li>
+        <li>It builds good academic habits that support you throughout your studies</li>
+      </ul>
+    </div>
+    <h2>How Harvard Referencing Works</h2>
+    <p>Harvard referencing uses an <strong>author–date</strong> system with two parts:</p>
+    <div class="workflow-box purple-box">
+      <div class="workflow-header purple-hd">The Two Parts</div>
+      <div class="workflow-steps">
+        <div class="step">
+          <div class="step-num purple-num">1</div>
+          <div class="step-title purple-title">In-Text Citation — used directly on your page</div>
+          <p style="font-size:0.9rem;margin-bottom:8px;">When you reference something on your research or design page, add a short citation in brackets:</p>
+          <div class="ref-example"><div class="ref-label">Format</div><p>(Author surname, Year)</p></div>
+          <div class="ref-example"><div class="ref-label">Examples</div><p>(Richter, 1988) &nbsp;|&nbsp; (Simpson, 2002, p. 14)</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num purple-num">2</div>
+          <div class="step-title purple-title">Reference List Entry — at the end of your portfolio section</div>
+          <p style="font-size:0.9rem;margin-bottom:8px;">The full reference gives all the information needed to find the source.</p>
+          <div class="ref-example"><div class="ref-label">Book</div><p>Surname, Initial. (Year) <em>Title in Italics</em>. Place: Publisher.</p></div>
+          <div class="ref-example"><div class="ref-label">Artwork in a Gallery</div><p>Artist, Initial. (Year) <em>Title of Work</em> [Medium]. City: Gallery.</p></div>
+          <div class="ref-example"><div class="ref-label">Website</div><p>Author (Year) <em>Page Title</em>. Available at: URL (Accessed: Day Month Year).</p></div>
+          <div class="ref-example"><div class="ref-label">Online Artwork / Image</div><p>Artist, Initial. (Year) <em>Title</em> [Medium]. Available at: URL (Accessed: Day Month Year).</p></div>
+        </div>
+      </div>
+    </div>
+    <h2>Try It — Write Your First Reference</h2>
+    <p>Use the Harvard Referencing Guide below to write a reference for the artist you chose in Task 1. Add the in-text citation to your A3 layout and save the full reference for your portfolio.</p>
+    <div style="text-align:center;margin:1.2rem 0;">
+      <a href="https://hsstokes.github.io/Harvard-Referencing-Guide/" target="_blank" style="display:inline-block;background:var(--purple);color:white;padding:13px 26px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.95rem;box-shadow:0 4px 16px rgba(108,53,201,0.3);">📚 Open Harvard Referencing Guide &amp; Generator →</a>
+    </div>
+    <div class="tip-box">
+      <h4>💡 Quick Tips</h4>
+      <ul>
+        <li>For artworks always include the medium in square brackets — e.g. <strong>[Oil on canvas]</strong> or <strong>[Digital photograph]</strong></li>
+        <li>For websites always include the date you accessed it</li>
+        <li>Your reference list should be in <strong>alphabetical order</strong> by author surname</li>
+        <li>Use <em>et al.</em> in citations for three or more authors, but list all names in the reference list</li>
+      </ul>
+    </div>
+    <div class="checklist purple-check">
+      <h3>Task 3 Checklist ✓</h3>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Understand the difference between in-text citation and reference list</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Written a full reference for your chosen artist</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Added in-text citation to your A3 layout</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Used the Harvard Referencing Guide to check your formatting</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">All sources in your portfolio section are now credited</span></div>
+    </div>
+    <div class="nav-btns">
+      <button class="nav-btn btn-prev" onclick="goTo('task2')">Task 2</button>
+      <button class="nav-btn btn-next blue-next" onclick="goTo('task4')">Task 4: Reflect</button>
+    </div>
+  </div>
+
+  <!-- TASK 4 -->
+  <div id="task4" class="section">
+    <div class="section-banner banner-blue">📝 Task 4 — Document &amp; Reflect on Your Learning <span style="font-size:0.78rem;font-weight:400;opacity:0.8;">(20 minutes)</span></div>
+    <p style="text-align:center;margin-bottom:1.5rem;">Use the final 20 minutes to document your progress and reflect on what you have learned today. This evidence supports your portfolio and demonstrates your development as a designer.</p>
+    <div class="info-box blue-info">
+      <strong>Why document your practice?</strong>
+      <ul>
+        <li>It shows your tutor <strong>how you have learned</strong>, not just what you produced</li>
+        <li>It builds a record of <strong>skills developed</strong> across the term</li>
+        <li>Reflective writing is a key graduate attribute at <strong>Level 5 and above</strong></li>
+        <li>Your documentation is submitted alongside your practical work on Padlet</li>
+      </ul>
+    </div>
+    <h2>How to Complete Your Progress Documentation</h2>
+    <div class="doc-card">
+      <h3>📋 Progress Documentation Tool</h3>
+      <p>Open the tool, complete all four sections, download your PDF, and upload it to Padlet alongside your other work.</p>
+      <div class="doc-steps">
+        <div class="doc-step"><div class="ds-num">1</div><p>Enter your name and take screenshots of your Photoshop work</p></div>
+        <div class="doc-step"><div class="ds-num">2</div><p>Upload 2–3 screenshots showing your progress today</p></div>
+        <div class="doc-step"><div class="ds-num">3</div><p>Rate your confidence and answer all four reflection questions</p></div>
+        <div class="doc-step"><div class="ds-num">4</div><p>Download as PDF and upload to Padlet with your JPEG</p></div>
+      </div>
+      <a href="https://hsstokes.github.io/Progress_Documentation/" target="_blank" class="doc-link">📝 Open Progress Documentation Tool →</a>
+    </div>
+    <h2>Reflection Prompts</h2>
+    <p>Use these prompts to guide your writing inside the documentation tool:</p>
+    <div class="workflow-box blue-box">
+      <div class="workflow-header blue-hd">Four Questions to Answer</div>
+      <div class="workflow-steps">
+        <div class="step"><div class="step-num blue-num">1</div><div class="step-title blue-title">What techniques did you practise?</div><p style="font-size:0.88rem;margin:0;">Describe the specific Photoshop skills you used — Content-Aware Fill, layer blending, the Type Tool. Which felt most challenging and why?</p></div>
+        <div class="step"><div class="step-num blue-num">2</div><div class="step-title blue-title">What challenges did you face and how did you solve them?</div><p style="font-size:0.88rem;margin:0;">Were there moments where you got stuck? How did you work through it — by referring to the steps, experimenting, or asking for help?</p></div>
+        <div class="step"><div class="step-num blue-num">3</div><div class="step-title blue-title">What worked well in your approach?</div><p style="font-size:0.88rem;margin:0;">Which part of your A3 composition are you most satisfied with? What decisions did you make that improved the outcome?</p></div>
+        <div class="step"><div class="step-num blue-num">4</div><div class="step-title blue-title">What will you do differently next time?</div><p style="font-size:0.88rem;margin:0;">Is there a technique you would like to explore further? How might you develop this work in the next session?</p></div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <h4>💡 Tips for Strong Reflective Writing at Level 5</h4>
+      <ul>
+        <li>Be <strong>specific</strong> — refer to actual tools, steps, or decisions rather than vague statements</li>
+        <li>Connect your Photoshop work to your <strong>research and design ideas</strong></li>
+        <li>Use <strong>evaluative language</strong> — "this was effective because…", "I found this challenging because…"</li>
+        <li>Aim for 3–5 sentences per question</li>
+      </ul>
+    </div>
+    <div class="checklist blue-check">
+      <h3>Task 4 Checklist ✓</h3>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Opened the Progress Documentation Tool</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Uploaded 2–3 screenshots of today's work</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Rated your confidence level</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Answered all four reflection questions</span></div>
+      <div class="checklist-item"><div class="chk-box" onclick="tog(this)"></div><span class="chk-label">Downloaded your Progress Report as a PDF</span></div>
+    </div>
+    <div class="nav-btns">
+      <button class="nav-btn btn-prev" onclick="goTo('task3')">Task 3</button>
+      <button class="nav-btn btn-next gold-next" onclick="goTo('submit')">Submit Your Work</button>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div id="submit" class="section">
+    <div class="section-banner banner-gold">📤 Submit Your Work — Upload to Padlet</div>
+    <p style="text-align:center;margin-bottom:1.5rem;">Once you have completed all four tasks, upload your work to Padlet for review and feedback.</p>
+    <div class="submit-box">
+      <h3>What to Upload</h3>
+      <div class="submit-items">
+        <div class="submit-item"><h4>1. A3 Photoshop Layout</h4><p>Content-Aware Fill composition with artist research text — exported as JPEG</p></div>
+        <div class="submit-item"><h4>2. Research Page</h4><p>Your updated research page with links, annotations, and credits — as JPEG</p></div>
+        <div class="submit-item"><h4>3. Harvard Reference</h4><p>Screenshot or PDF showing your completed reference list entry</p></div>
+        <div class="submit-item"><h4>4. Progress Report</h4><p>PDF downloaded from the Progress Documentation Tool</p></div>
+      </div>
+      <a href="https://padlet.com/artslondon/turning-handwriting-into-digital-text-y4fsk3gnl5py0uhg" target="_blank" class="padlet-btn">📤 Upload to Padlet →</a>
+    </div>
+    <h2>What You Have Learned This Session</h2>
+    <div class="info-box" style="background:#e8f5e9;border-color:#4caf50;">
+      <ul>
+        <li>How to use <strong>Content-Aware Fill</strong> in Photoshop to expand physical research into new digital compositions</li>
+        <li>How to add <strong>artist research and reflective text</strong> to a professional A3 layout</li>
+        <li>Essential <strong>Photoshop keyboard shortcuts</strong> for efficient working</li>
+        <li>What every <strong>research page</strong> in your portfolio should contain — seen through student examples</li>
+        <li>How to write a <strong>Harvard reference</strong> for an artist, designer, or website</li>
+        <li>How to <strong>document and reflect</strong> on your own learning at Level 5</li>
+      </ul>
+    </div>
+    <div class="tip-box">
+      <h4>🔗 Return to Moodle</h4>
+      <p style="margin:4px 0 0;"><a href="https://moodle.arts.ac.uk/mod/page/view.php?id=1510167&forceview=1" target="_blank" style="color:var(--teal);font-weight:700;">Return to the Moodle Lesson Page →</a><br><span style="font-size:0.8rem;color:#666;">Scroll to the bottom and click the Padlet wall to upload your completed work.</span></p>
+    </div>
+    <div class="nav-btns">
+      <button class="nav-btn btn-prev" onclick="goTo('task4')">Task 4</button>
+      <button class="nav-btn btn-next" onclick="goTo('overview')">Back to Start</button>
+    </div>
+  </div>
+
+  <footer>© 2025 Fashion Design Term 1, Rotation 1 — IELS Level 5<br><em>Student examples used with permission for educational purposes.</em></footer>
+</div>
+
+<button class="print-btn" onclick="window.print()" title="Print">🖨️</button>
+
+<script>
+const TABS=['overview','task1','task2','task3','task4','submit'];
+function goTo(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active-tab'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector('[data-tab="'+id+'"]').classList.add('active-tab');
+  document.getElementById('progressBar').style.width=((TABS.indexOf(id)+1)/TABS.length*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>goTo(b.dataset.tab)));
+document.getElementById('progressBar').style.width=(1/TABS.length*100)+'%';
+function tog(el){el.classList.toggle('checked');}
+function openLB(src,cap,credit){
+  document.getElementById('lb-img').src=src;
+  document.getElementById('lb-cap').innerHTML=cap+(credit?'<em>'+credit+'</em>':'');
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLB(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
+
+// Keyboard Shortcuts Quiz
+const shortcuts=[
+  {q:"Undo",mac:"Cmd+Z",pc:"Ctrl+Z"},
+  {q:"Deselect",mac:"Cmd+D",pc:"Ctrl+D"},
+  {q:"Free Transform (resize/rotate)",mac:"Cmd+T",pc:"Ctrl+T"},
+  {q:"Copy",mac:"Cmd+C",pc:"Ctrl+C"},
+  {q:"Paste",mac:"Cmd+V",pc:"Ctrl+V"},
+  {q:"Zoom In",mac:"Cmd++",pc:"Ctrl++"},
+  {q:"Zoom Out",mac:"Cmd+-",pc:"Ctrl+-"},
+  {q:"Cut",mac:"Cmd+X",pc:"Ctrl+X"},
+  {q:"Save",mac:"Cmd+S",pc:"Ctrl+S"},
+  {q:"New Document",mac:"Cmd+N",pc:"Ctrl+N"},
+];
+let qOS='mac',qIdx=0,qScore=0,qAnswered=false;
+function setOS(os){
+  qOS=os;
+  document.getElementById('btn-mac').classList.toggle('active',os==='mac');
+  document.getElementById('btn-pc').classList.toggle('active',os==='pc');
+  initQuiz();
+}
+function initQuiz(){
+  qIdx=0;qScore=0;qAnswered=false;
+  document.getElementById('q-result').style.display='none';
+  document.getElementById('q-feedback').textContent='';
+  document.getElementById('q-score').textContent='';
+  loadQ();
+}
+function shuffle(a){return[...a].sort(()=>Math.random()-0.5);}
+function loadQ(){
+  if(qIdx>=shortcuts.length){showResult();return;}
+  const item=shortcuts[qIdx];
+  const correct=item[qOS];
+  const pool=shortcuts.filter((_,i)=>i!==qIdx).map(s=>s[qOS]);
+  const opts=shuffle([correct,...shuffle(pool).slice(0,3)]);
+  document.getElementById('q-question').textContent='What is the shortcut for: '+item.q+'?';
+  document.getElementById('q-feedback').textContent='';
+  document.getElementById('q-score').textContent='Question '+(qIdx+1)+' of '+shortcuts.length+' · Score: '+qScore;
+  qAnswered=false;
+  const c=document.getElementById('q-options');
+  c.innerHTML='';
+  opts.forEach(opt=>{
+    const btn=document.createElement('button');
+    btn.className='quiz-opt';
+    btn.textContent=opt;
+    btn.onclick=()=>answer(btn,opt,correct);
+    c.appendChild(btn);
+  });
+}
+function answer(btn,chosen,correct){
+  if(qAnswered)return;
+  qAnswered=true;
+  const fb=document.getElementById('q-feedback');
+  if(chosen===correct){btn.classList.add('correct');fb.textContent='✓ Correct!';fb.style.color='#28a745';qScore++;}
+  else{btn.classList.add('wrong');fb.textContent='✗ The answer is '+correct;fb.style.color='#dc3545';
+    document.querySelectorAll('.quiz-opt').forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});}
+  document.getElementById('q-score').textContent='Question '+(qIdx+1)+' of '+shortcuts.length+' · Score: '+qScore;
+  qIdx++;
+  setTimeout(loadQ,1800);
+}
+function showResult(){
+  document.getElementById('q-question').textContent='';
+  document.getElementById('q-options').innerHTML='';
+  document.getElementById('q-feedback').textContent='';
+  document.getElementById('q-score').textContent='';
+  const pct=Math.round(qScore/shortcuts.length*100);
+  const msg=pct>=80?'🌟 Excellent — great shortcut knowledge!':pct>=50?'👍 Good work — keep practising!':'💭 Keep going — try again to improve.';
+  document.getElementById('q-final').textContent='You scored '+qScore+' / '+shortcuts.length+' ('+pct+'%) — '+msg;
+  document.getElementById('q-result').style.display='block';
+}
+initQuiz();
+</script>
+</body>
+</html>
